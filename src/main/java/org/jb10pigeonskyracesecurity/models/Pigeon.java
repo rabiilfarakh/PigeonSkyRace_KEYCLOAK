@@ -1,24 +1,25 @@
 package org.jb10pigeonskyracesecurity.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jb10pigeonskyracesecurity.utils.enums.Gender;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "pigeons")
 @Data
+@Entity
+@Table(name = "pigeons")
 public class Pigeon {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     private String bandNumber;
 
@@ -30,9 +31,10 @@ public class Pigeon {
     private String color;
     private String image;
 
-    @DBRef(lazy = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "breeder_id")
     private Breeder breeder;
 
-    @DBRef
+    @OneToMany(mappedBy = "pigeon", cascade = CascadeType.ALL)
     private List<Ranking> rankings;
 }

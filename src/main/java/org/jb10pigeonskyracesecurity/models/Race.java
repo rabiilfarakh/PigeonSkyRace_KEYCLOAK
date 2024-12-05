@@ -1,25 +1,30 @@
 package org.jb10pigeonskyracesecurity.models;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jb10pigeonskyracesecurity.utils.records.Coordinates;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "races")
+@Entity
+@Table(name = "races")
 public class Race {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
     private String name;
+
+    @OneToOne
     private Coordinates startCoordinates;
+
     private LocalDateTime startDate;
     private double targetDistance;
     private double tolerance;
@@ -27,9 +32,10 @@ public class Race {
     private LocalDateTime closedAt;
     private boolean autoAdj;
 
-    @DBRef(lazy = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "competition_id")
     private Competition competition;
 
-    @DBRef
+    @OneToMany(mappedBy = "race", cascade = CascadeType.ALL)
     private List<Ranking> rankings;
 }

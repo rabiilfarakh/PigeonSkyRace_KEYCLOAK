@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RankingServiceImpl implements RankingService {
@@ -67,7 +68,7 @@ public class RankingServiceImpl implements RankingService {
 
     @Override
     public List<RankingDTO> calculateAndRank(String raceId) {
-        return rankingMapper.toRankingDTOs(rankingRepository.findByRaceId(raceId));
+        return rankingMapper.toRankingDTOs(rankingRepository.findByRaceId(UUID.fromString(raceId)));
     }
 
 
