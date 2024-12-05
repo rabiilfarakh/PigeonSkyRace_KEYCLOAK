@@ -2,26 +2,27 @@ package org.jb10pigeonskyracesecurity.models;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jb10pigeonskyracesecurity.utils.csvConverters.LocalTimeConverter;
 import org.jb10pigeonskyracesecurity.utils.csvConverters.PigeonConverter;
 import org.jb10pigeonskyracesecurity.utils.csvConverters.RaceConverter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalTime;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "rankings")
+@Entity
+@Table(name = "rankings")
 public class Ranking {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @CsvBindByName
-    private String id;
+    private UUID id;
 
     @CsvCustomBindByName(converter = LocalTimeConverter.class)
     private LocalTime startTime;
@@ -32,11 +33,13 @@ public class Ranking {
     @CsvBindByName
     private double score;
 
-    @DBRef
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pigeon_id")
     @CsvCustomBindByName(converter = PigeonConverter.class)
     private Pigeon pigeon;
 
-    @DBRef
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "race_id")
     @CsvCustomBindByName(converter = RaceConverter.class)
     private Race race;
 }

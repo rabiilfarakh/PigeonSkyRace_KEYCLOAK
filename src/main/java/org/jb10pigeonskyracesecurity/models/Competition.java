@@ -1,25 +1,26 @@
 package org.jb10pigeonskyracesecurity.models;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "competitions")
+@Entity
+@Table(name = "competitions")
 public class Competition {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     private String name;
     private LocalDateTime closedAt;
 
-    @DBRef
+    @OneToMany(mappedBy = "competition")
     private List<Race> races;
 }

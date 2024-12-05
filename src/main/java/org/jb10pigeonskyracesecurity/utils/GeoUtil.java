@@ -12,11 +12,11 @@ public class GeoUtil {
     private static final double STEP = 0.0001;
 
     public double haversine(Coordinates coordinates1, Coordinates coordinates2) {
-        double dLat = Math.toRadians(coordinates2.latitude() - coordinates1.latitude());
-        double dLon = Math.toRadians(coordinates2.longitude() - coordinates1.longitude());
+        double dLat = Math.toRadians(coordinates2.getLatitude() - coordinates1.getLatitude());
+        double dLon = Math.toRadians(coordinates2.getLongitude() - coordinates1.getLongitude());
 
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(Math.toRadians(coordinates1.latitude())) * Math.cos(Math.toRadians(coordinates2.latitude()))
+                + Math.cos(Math.toRadians(coordinates1.getLatitude())) * Math.cos(Math.toRadians(coordinates2.getLatitude()))
                 * Math.sin(dLon / 2) * Math.sin(dLon / 2);
 
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -59,8 +59,8 @@ public class GeoUtil {
     }
 
     private Cartesian toCartesian(Coordinates coordinates) {
-        double latRad = Math.toRadians(coordinates.latitude());
-        double lonRad = Math.toRadians(coordinates.longitude());
+        double latRad = Math.toRadians(coordinates.getLatitude());
+        double lonRad = Math.toRadians(coordinates.getLongitude());
 
         double x = EARTH_RADIUS_KM * Math.cos(latRad) * Math.cos(lonRad);
         double y = EARTH_RADIUS_KM * Math.cos(latRad) * Math.sin(lonRad);

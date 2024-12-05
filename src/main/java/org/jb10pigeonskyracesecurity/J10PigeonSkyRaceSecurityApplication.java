@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class J108PigeonSkyRaceSecurityApplication {
+public class J10PigeonSkyRaceSecurityApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(J108PigeonSkyRaceSecurityApplication.class, args);
+        SpringApplication.run(J10PigeonSkyRaceSecurityApplication.class, args);
     }
 }

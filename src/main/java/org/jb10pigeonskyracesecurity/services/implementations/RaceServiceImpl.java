@@ -45,7 +45,7 @@ public class RaceServiceImpl implements RaceService {
     public RaceDTO save(RaceDTO raceDTO) {
         Race race = raceMapper.toRace(raceDTO);
         Race savedRace = raceRepository.save(race);
-        return findById(savedRace.getId());
+        return findById(String.valueOf(savedRace.getId()));
     }
 
     @Override

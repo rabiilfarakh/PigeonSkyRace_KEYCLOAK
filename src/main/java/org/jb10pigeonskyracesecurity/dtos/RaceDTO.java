@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
-import org.jb10pigeonskyracesecurity.utils.annotations.RefExists;
 import org.jb10pigeonskyracesecurity.utils.records.Coordinates;
 
 import java.time.LocalDateTime;
@@ -22,7 +21,7 @@ public record RaceDTO(
         double avgDistance,
         boolean autoAdj,
         @NotNull LocalDateTime closedAt,
-        @RefExists(collection = "competitions")
+//        @RefExists(collection = "competitions")
         List<RankingDTO> rankings ,
         CompetitionDTO competition){
 

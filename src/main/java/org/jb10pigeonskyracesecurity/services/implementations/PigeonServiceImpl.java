@@ -30,7 +30,7 @@ public class PigeonServiceImpl implements PigeonService {
         Pigeon pigeon = pigeonMapper.toPigeon(pigeonDTO);
         pigeon.setBandNumber(bandNumberGenerator.generate(pigeon.getGender(), pigeon.getBirthYear()));
         Pigeon savedPigeon = pigeonRepository.save(pigeon);
-        return findById(savedPigeon.getId());
+        return findById(String.valueOf(savedPigeon.getId()));
     }
 
     @Override

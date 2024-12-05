@@ -1,24 +1,13 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  mongo_db:
-    image: mongo:latest
-    restart: unless-stopped
-    env_file: ./.env
-    networks:
-      - default-network
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
-    ports:
-      - "27017:27017"
-    volumes:
-      - db:/data/db
-      - ./seeder.js:/docker-entrypoint-initdb.d/seeder.js:ro
-
-volumes:
   db:
-
-networks:
-  default-network:
-    driver: bridge
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
