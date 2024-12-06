@@ -1,9 +1,9 @@
 package org.jb10pigeonskyracesecurity.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import org.jb10pigeonskyracesecurity.utils.enums.Role;
+import org.springframework.context.annotation.Configuration;
 
 @Data
 @Entity
@@ -11,8 +11,12 @@ import lombok.Data;
 public class User {
     @Id
     private String id;
+    @Column(unique = true)
     private String username;
     private String email;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
 
 }

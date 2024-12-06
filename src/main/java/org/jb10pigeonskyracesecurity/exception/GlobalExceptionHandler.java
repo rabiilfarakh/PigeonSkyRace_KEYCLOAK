@@ -3,6 +3,7 @@ package org.jb10pigeonskyracesecurity.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import org.jb10pigeonskyracesecurity.utils.ApiResponse;
 import org.jb10pigeonskyracesecurity.utils.ResponseUtil;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,6 +15,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ApiResponse<Object> handleGeneralException(Exception ex, HttpServletRequest request) {
         return ResponseUtil.error(Arrays.asList(ex.getMessage()), "An unexpected error occurred", 1001, request.getRequestURI());
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ApiResponse<Object> handleUsernameNotFoundException(Exception ex, HttpServletRequest request) {
+        return ResponseUtil.error(Arrays.asList(ex.getMessage()), "User not found", 500, request.getRequestURI());
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
