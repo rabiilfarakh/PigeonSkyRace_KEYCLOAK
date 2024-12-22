@@ -2,6 +2,7 @@ package com.example.PigeonSkyRace_KEYCLOAK.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -16,8 +17,9 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(h->h.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-                .authorizeHttpRequests(ar->ar.requestMatchers("/api/**","/swagger-ui/**","/swagger-ui.html/**","/v3/**","/h2-console/**").permitAll())
+                .authorizeHttpRequests(ar->ar.requestMatchers("/swagger-ui/**","/swagger-ui.html/**","/v3/**","/h2-console/**").permitAll())
                 .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
+                .oauth2ResourceServer(o2->o2.jwt(Customizer.withDefaults()))
                 .build();
     }
 }
